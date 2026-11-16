@@ -1,0 +1,255 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --c-paper: 246 242 233;
+  --c-paper2: 251 248 241;
+  --c-surface: 255 253 248;
+  --c-ink: 33 30 26;
+  --c-soft: 92 85 74;
+  --c-faint: 150 141 126;
+  --c-line: 213 204 189;
+  --c-moss: 104 123 94;
+  --c-clay: 185 116 86;
+  --c-dusk: 108 123 147;
+  --c-sun: 200 156 78;
+  color-scheme: light;
+}
+
+.dark {
+  --c-paper: 19 18 17;
+  --c-paper2: 25 23 21;
+  --c-surface: 31 29 26;
+  --c-ink: 235 229 218;
+  --c-soft: 174 165 151;
+  --c-faint: 122 114 102;
+  --c-line: 62 57 50;
+  --c-moss: 150 170 137;
+  --c-clay: 206 139 108;
+  --c-dusk: 137 153 177;
+  --c-sun: 219 180 112;
+  color-scheme: dark;
+}
+
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  @apply bg-paper text-ink font-sans antialiased;
+  overscroll-behavior-y: none;
+  -webkit-text-size-adjust: 100%;
+  text-rendering: optimizeLegibility;
+}
+
+input,
+textarea,
+button,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+input[type='number']::-webkit-outer-spin-button,
+input[type='number']::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type='number'] {
+  -moz-appearance: textfield;
+}
+
+::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+.backdrop::before {
+  content: '';
+  position: absolute;
+  inset: -20%;
+  background:
+    radial-gradient(55% 40% at 12% 2%, rgb(var(--c-moss) / 0.14), transparent 70%),
+    radial-gradient(50% 40% at 92% 4%, rgb(var(--c-sun) / 0.13), transparent 70%),
+    radial-gradient(70% 50% at 50% 104%, rgb(var(--c-clay) / 0.1), transparent 70%);
+}
+.backdrop::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0.035;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.dark .backdrop::after {
+  opacity: 0.05;
+  mix-blend-mode: screen;
+}
+
+@layer components {
+  .card {
+    @apply rounded-3xl border border-line/70 bg-surface/80 shadow-card;
+    backdrop-filter: blur(12px);
+  }
+  .card-quiet {
+    @apply rounded-3xl border border-line/60 bg-surface/45;
+    backdrop-filter: blur(8px);
+  }
+  .tap {
+    @apply transition-transform duration-200 ease-soft active:scale-[0.975];
+  }
+  .btn {
+    @apply inline-flex select-none items-center justify-center gap-2 rounded-full px-5 py-3 text-[15px] font-medium transition-all duration-300 ease-soft active:scale-[0.97] disabled:pointer-events-none disabled:opacity-40;
+  }
+  .btn-primary {
+    @apply btn bg-ink text-paper shadow-lift;
+  }
+  .btn-soft {
+    @apply btn border border-line bg-surface/70 text-ink;
+  }
+  .chip {
+    @apply inline-flex select-none items-center gap-1.5 rounded-full border border-line/80 px-3 py-1.5 text-[13px] text-soft transition-all duration-200 ease-soft active:scale-95;
+  }
+  .chip-on {
+    @apply border-ink/15 bg-ink text-paper;
+  }
+  .field {
+    @apply w-full rounded-2xl border border-line/70 bg-paper2/70 px-4 py-3 text-[15px] text-ink outline-none transition-all duration-200 placeholder:text-faint/80 focus:border-moss/50 focus:bg-surface/80 focus:ring-4 focus:ring-moss/10;
+  }
+  .eyebrow {
+    @apply text-[11px] font-medium uppercase tracking-[0.22em] text-faint;
+  }
+  .num {
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.01em;
+  }
+  .diary {
+    @apply whitespace-pre-wrap font-serif text-[16.5px] leading-[1.95] text-ink/90;
+    word-break: break-word;
+  }
+  .hair {
+    @apply h-px w-full bg-line/60;
+  }
+}
+
+.anim-in {
+  animation: fadeUp 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.anim-in-2 {
+  animation: fadeUp 0.6s 0.06s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.anim-in-3 {
+  animation: fadeUp 0.7s 0.12s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes sheetUp {
+  from {
+    transform: translateY(4%);
+    opacity: 0.4;
+  }
+  to {
+    transform: none;
+    opacity: 1;
+  }
+}
+.sheet-in {
+  animation: sheetUp 0.36s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.fade-in {
+  animation: fadeIn 0.3s ease both;
+}
+@keyframes breathe {
+  0%,
+  100% {
+    opacity: 0.5;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.85;
+    transform: scale(1.06);
+  }
+}
+.breathe {
+  animation: breathe 6s ease-in-out infinite;
+}
+@keyframes drawLine {
+  from {
+    stroke-dashoffset: 1;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+.draw {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: drawLine 1.1s 0.15s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+@keyframes rise {
+  from {
+    transform: scaleY(0.02);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+.rise {
+  transform-origin: bottom;
+  animation: rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.pb-safe {
+  padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 0.5rem);
+}
+.pt-safe {
+  padding-top: calc(env(safe-area-inset-top, 0px) + 0.5rem);
+}
+.sheet-scroll {
+  -webkit-overflow-scrolling: touch;
+}
+
+.no-callout {
+  -webkit-touch-callout: none;
+  user-select: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
